@@ -1,0 +1,27 @@
+{
+  "name": "credstash",
+  "version": "0.0.1",
+  "description": "Module for reading credstash secrets",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roylines/node-credstash.git"
+  },
+  "keywords": [
+    "credstash",
+    "secrets"
+  ],
+  "author": "Roy Lines",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/roylines/node-credstash/issues"
+  },
+  "homepage": "https://github.com/roylines/node-credstash#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5"
+  }
+}
