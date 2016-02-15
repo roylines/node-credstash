@@ -3,46 +3,10 @@ const aesjs = require('aes-js');
 const async = require('async');
 const crypto = require('crypto');
 const encoder = require('./lib/encoder');
-const hmac = require('hmac');
+const secrets = require('./lib/secrets');
 
 function Credstash(config) {
   this.kms = new AWS.KMS();
-  this.ddb = new AWS.DynamoDB();
-}
-
-function find(ddb, name, done) {
-  var params = {
-    TableName: 'credential-store',
-    ConsistentRead: true,
-    Limit: 1,
-    ScanIndexForward: false,
-    KeyConditions: {
-      name: {
-        ComparisonOperator: 'EQ',
-        AttributeValueList: [{
-          S: name
-        }]
-      }
-    }
-  };
-
-  return ddb.query(params, done);
-}
-
-function mapDDB(name, data, done) {
-  if (!data.Items || data.Items.length != 1) {
-    return done('secret not found', name);
-  }
-
-  var item = data.Items[0];
-
-  var stash = {
-    key: item.key.S,
-    contents: item.contents.S,
-    hmac: item.hmac.S
-  };
-
-  return done(null, stash);
 }
 
 function kmsDecrypt(kms, stash, done) {
@@ -78,8 +42,7 @@ function decrypt(stash, done) {
 
 Credstash.prototype.get = function(name, done) {
   return async.waterfall([
-    async.apply(find, this.ddb, name),
-    async.apply(mapDDB, name),
+    async.apply(secrets.get, name),
     async.apply(kmsDecrypt, this.kms),
     async.apply(splitKeys),
     async.apply(checkHMAC),
