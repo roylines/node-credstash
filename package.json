@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/roylines/node-credstash#readme",
   "devDependencies": {
+    "aws-sdk-mock": "1.0.5",
     "chai": "3.5.0",
     "mocha": "2.4.5"
   },
