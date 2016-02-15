@@ -21,7 +21,12 @@
   },
   "homepage": "https://github.com/roylines/node-credstash#readme",
   "devDependencies": {
-    "chai": "^3.5.0",
-    "mocha": "^2.4.5"
+    "chai": "3.5.0",
+    "mocha": "2.4.5"
+  },
+  "dependencies": {
+    "aes-js": "0.2.2",
+    "async": "1.5.2",
+    "aws-sdk": "2.2.35"
   }
 }
