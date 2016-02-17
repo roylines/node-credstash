@@ -25,6 +25,6 @@ $ npm install credstash
 
 ## Who this module for?
 This module is for environments where you are using [credstash](https://github.com/fugue/credstash) to store secrets,
-and you want to read secrets within node without installing python. The module can be used
-within you microservice to retrieve, for instance, database connection credentials.
+and you want to read secrets within node without installing python.
+The module could be used within your node module to retrieve, for instance, database connection credentials from credstash.
 
