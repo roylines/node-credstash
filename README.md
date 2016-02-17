@@ -1,4 +1,6 @@
 # node-credstash
+[![Circle CI](https://circleci.com/gh/roylines/node-credstash.svg?style=svg)](https://circleci.com/gh/roylines/node-credstash)
+
 Node.js module for reading [credstash](https://github.com/fugue/credstash) secrets without needing snakes
 
 ```js
