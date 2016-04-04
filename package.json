@@ -31,6 +31,7 @@
   "dependencies": {
     "aes-js": "0.2.2",
     "async": "1.5.2",
-    "aws-sdk": "2.2.35"
+    "aws-sdk": "2.2.35",
+    "xtend": "4.0.1"
   }
 }
