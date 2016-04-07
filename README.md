@@ -12,8 +12,27 @@ return credstash.get('secret', (e, secret) => {
 });
 ```
 
+## retrieve last N versions of a secret
+
+Credstash support [versioning of secrets](https://github.com/fugue/credstash#versioning-secrets) which allows to easily rotate secrets.
+
+By default node-credstash will return the latest (most recent version of a secret).
+
+You can also retrieve the latest N versions of a secret as follows:
+
+```js
+const Credstash = require('../index.js');
+
+var credstash = new Credstash();
+return credstash.get('secret', {limit: 3}, (e, secrets) => {
+  console.log('this is the last version', secrets[0]);
+  console.log('this is the second-last', secrets[1]);
+  console.log('this is the third-last', secrets[2]);
+});
+```
+
 ## Installation
-Ensure you have [AWS credentials configured](http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-configuring.html). 
+Ensure you have [AWS credentials configured](http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-configuring.html).
 The credentials should be set up as a [secret reader](https://github.com/fugue/credstash#secret-reader)
 
 ```bash
