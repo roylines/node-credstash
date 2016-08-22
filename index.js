@@ -3,7 +3,7 @@ const decrypter = require('./lib/decrypter');
 const encoder = require('./lib/encoder');
 const hmac = require('./lib/hmac');
 const keys = require('./lib/keys');
-const secrets = require('./lib/secrets');
+const Secrets = require('./lib/secrets');
 const xtend = require('xtend');
 
 const defaults = {
@@ -11,7 +11,11 @@ const defaults = {
 };
 
 function Credstash(config) {
-  this.table = config ? config.table : undefined;
+  config = config || {};
+  var awsConfig = config.awsConfig || {};
+
+  this.secrets = new Secrets(config.table, awsConfig);
+
 }
 
 Credstash.prototype.get = function(name, options, done) {
@@ -23,7 +27,7 @@ Credstash.prototype.get = function(name, options, done) {
   }
 
   return async.waterfall([
-    async.apply(secrets.get, this.table, name, options),
+    async.apply(this.secrets.getVersions.bind(this.secrets), name, options),
     async.apply(keys.decrypt),
     async.apply(hmac.check),
     async.apply(decrypter.decrypt)
