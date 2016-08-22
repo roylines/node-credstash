@@ -22,8 +22,8 @@ function Credstash(config) {
 
 }
 
-Credstash.prototype.getSecret = function(name, version, context, done) {
-  let args = utils.optArgs({version:version, context: context, done: done});
+Credstash.prototype.getSecret = function (name, version, context, done) {
+  let args = utils.optArgs({version: version, context: context, done: done});
   version = args.version;
   context = args.context;
   done = args.done;
@@ -33,7 +33,7 @@ Credstash.prototype.getSecret = function(name, version, context, done) {
     fn = this.secrets.getByVersion.bind(this.secrets, name, version);
   }
 
-  return this.decryptSecrets(fn, context, function(err, secret) {
+  return this.decryptSecrets(fn, context, function (err, secret) {
     if (err) {
       return done(err);
     }
@@ -42,7 +42,7 @@ Credstash.prototype.getSecret = function(name, version, context, done) {
   });
 };
 
-Credstash.prototype.get = function(name, options, done) {
+Credstash.prototype.get = function (name, options, done) {
   if (typeof options === 'function') {
     done = options;
     options = defaults;
@@ -52,19 +52,32 @@ Credstash.prototype.get = function(name, options, done) {
 
   return this.decryptSecrets(this.secrets.getVersions.bind(this.secrets, name, options), null,
     function (err, secrets) {
+      if (err) {
+        return done(err);
+      }
+
+      if (options.limit === 1) {
+        return done(null, secrets && secrets[0]);
+      }
+
+      done(null, secrets);
+    });
+};
+
+Credstash.prototype.listSecrets = function (options, done) {
+  if (typeof options === 'function') {
+    done = options;
+    options = {};
+  }
+  return this.secrets.getAllSecretsAndVersions(options, function (err, res) {
     if (err) {
       return done(err);
     }
-
-    if (options.limit === 1) {
-      return done(null, secrets && secrets[0]);
-    }
-
-    done(null, secrets);
+    return done(null, res.Items);
   });
 };
 
-Credstash.prototype.decryptSecrets = function(getSecrets, context, done) {
+Credstash.prototype.decryptSecrets = function (getSecrets, context, done) {
   return async.waterfall([
     async.apply(getSecrets),
     async.apply(this.keys.decryptAll.bind(this.keys, context)),
