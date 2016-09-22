@@ -1,6 +1,5 @@
 const async = require('async');
 const decrypter = require('./lib/decrypter');
-const encoder = require('./lib/encoder');
 const hmac = require('./lib/hmac');
 const keys = require('./lib/keys');
 const secrets = require('./lib/secrets');
@@ -22,22 +21,56 @@ Credstash.prototype.get = function(name, options, done) {
     options = xtend(defaults, options);
   }
 
-  return async.waterfall([
-    async.apply(secrets.get, this.table, name, options),
-    async.apply(keys.decrypt),
-    async.apply(hmac.check),
-    async.apply(decrypter.decrypt)
-  ], function (err, secrets) {
+  return decrypt(secrets.get, this.table, name, options, function (err, secrets) {
     if (err) {
       return done(err);
     }
 
+    var values = secrets && secrets.map(function (secret) {
+      return secret.value;
+    });
+
     if (options.limit === 1) {
-      return done(null, secrets && secrets[0]);
+      return done(null, values && values[0]);
     }
 
-    done(null, secrets);
+    done(null, values);
   });
 };
+
+Credstash.prototype.list = function(options, done) {
+  if (typeof options === 'function') {
+    done = options;
+    options = defaults;
+  } else {
+    options = xtend(defaults, options);
+  }
+
+  return decrypt(secrets.list, this.table, options, function (err, secrets) {
+    if (err) {
+      return done(err);
+    }
+
+    var obj = {};
+    secrets.forEach(function (secret) {
+      obj[secret.key] = secret.value;
+    });
+
+    done(null, obj);
+  });
+};
+
+function decrypt() {
+  var _arguments = Array.prototype.slice.call(arguments);
+  var args = _arguments.slice(0, _arguments.length - 1);
+  var done = _arguments[_arguments.length - 1];
+
+  return async.waterfall([
+    async.apply.apply(async, args),
+    async.apply(keys.decrypt),
+    async.apply(hmac.check),
+    async.apply(decrypter.decrypt)
+  ], done);
+}
 
 module.exports = Credstash;
