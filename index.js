@@ -14,28 +14,6 @@ function Credstash(config) {
   this.table = config ? config.table : undefined;
 }
 
-Credstash.prototype.list = function(options, done) {
-  if (typeof options === 'function') {
-    done = options;
-    options = defaults;
-  } else {
-    options = xtend(defaults, options);
-  }
-
-  return async.waterfall([
-    async.apply(secrets.list, this.table, options),
-    async.apply(keys.decrypt),
-    async.apply(hmac.check),
-    async.apply(decrypter.decryptedObject)
-  ], function (err, secrets) {
-    if (err) {
-      return done(err);
-    }
-
-    done(null, secrets);
-  });
-};
-
 Credstash.prototype.get = function(name, options, done) {
   if (typeof options === 'function') {
     done = options;
@@ -48,7 +26,7 @@ Credstash.prototype.get = function(name, options, done) {
     async.apply(secrets.get, this.table, name, options),
     async.apply(keys.decrypt),
     async.apply(hmac.check),
-    async.apply(decrypter.decryptedList)
+    async.apply(decrypter.decrypt)
   ], function (err, secrets) {
     if (err) {
       return done(err);
