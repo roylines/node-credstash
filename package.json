@@ -4,7 +4,7 @@
   "description": "Module for reading credstash secrets",
   "main": "index.js",
   "scripts": {
-    "test": "istanbul cover _mocha -dir $CIRCLE_ARTIFACTS",
+    "test": "nsp check && istanbul cover _mocha -dir $CIRCLE_ARTIFACTS",
     "coveralls": "cat $CIRCLE_ARTIFACTS/lcov.info | coveralls"
   },
   "repository": {
@@ -26,7 +26,8 @@
     "chai": "3.5.0",
     "coveralls": "2.11.6",
     "istanbul": "0.4.2",
-    "mocha": "2.4.5"
+    "mocha": "2.4.5",
+    "nsp": "^2.6.2"
   },
   "dependencies": {
     "aes-js": "0.2.2",
