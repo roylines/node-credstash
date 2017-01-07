@@ -6,7 +6,7 @@
   "scripts": {
     "security": "nsp check",
     "test": "istanbul cover _mocha -dir $CIRCLE_ARTIFACTS",
-    "coverage": "istanbul check-coverage --statement 90 -dir $CIRCLE_ARTIFACTS",
+    "coverage": "istanbul check-coverage --statement 90 $CIRCLE_ARTIFACTS/coverage.json",
     "coveralls": "cat $CIRCLE_ARTIFACTS/lcov.info | coveralls"
   },
   "repository": {
