@@ -4,15 +4,16 @@
 Node.js module for reading [credstash](https://github.com/fugue/credstash) secrets without needing snakes
 
 ```js
-const Credstash = require('../index.js');
+const Credstash = require('credstash');
+const credstash = new Credstash();
 
 // .get method for one key (table query)
-return credstash.get('secret', (e, secret) => {
+credstash.get('secret', (e, secret) => {
   console.log('do not share the secret', secret);
 });
 
 // .list method for multiple keys (table scan)
-return credstash.list((e, secrets) => {
+credstash.list((e, secrets) => {
   console.log('do not share the secrets', secrets);
 });
 ```
@@ -40,10 +41,10 @@ By default node-credstash will return the latest (most recent version of a secre
 You can also retrieve the latest N versions of a secret as follows:
 
 ```js
-const Credstash = require('../index.js');
+const Credstash = require('credstash');
+const credstash = new Credstash();
 
-var credstash = new Credstash();
-return credstash.get('secret', {limit: 3}, (e, secrets) => {
+credstash.get('secret', {limit: 3}, (e, secrets) => {
   console.log('this is the last version', secrets[0]);
   console.log('this is the second-last', secrets[1]);
   console.log('this is the third-last', secrets[2]);
