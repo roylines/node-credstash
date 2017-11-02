@@ -5,6 +5,7 @@ Node.js module for reading [credstash](https://github.com/fugue/credstash) secre
 
 ```js
 const Credstash = require('../index.js');
+var credstash = new Credstash();
 
 // .get method for one key (table query)
 return credstash.get('secret', (e, secret) => {
