@@ -23,6 +23,9 @@
     "url": "https://github.com/roylines/node-credstash/issues"
   },
   "homepage": "https://github.com/roylines/node-credstash#readme",
+  "peerDependencies": {
+    "aws-sdk": "*"
+  },
   "devDependencies": {
     "aws-sdk-mock": "1.0.5",
     "chai": "3.5.0",
@@ -34,7 +37,6 @@
   "dependencies": {
     "aes-js": "0.2.2",
     "async": "1.5.2",
-    "aws-sdk": "2.2.35",
     "xtend": "4.0.1"
   }
 }
