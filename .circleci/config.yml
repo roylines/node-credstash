@@ -1,0 +1,50 @@
+defaults: &defaults
+  shell: /bin/bash --login
+  docker:
+    - image: circleci/node:8.12.0-stretch
+
+version: 2
+jobs:
+  test:
+    <<: *defaults
+    steps:
+      - checkout
+      - run: npm ci
+      - run: npm test
+      - run: npm run coverage
+      - persist_to_workspace:
+        root: ~/project
+        paths:
+          - .
+  publish:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - run: sudo apt-get update
+      - run: sudo apt-get install -y python-pip
+      - run: sudo pip install awscli credstash
+      - run: echo "//registry.npmjs.org/:_authToken=$(credstash -r eu-west-1 get npm-auth-token-circleci)" > ~/.npmrc
+      - run:
+          command: |
+            set -e
+            PACKAGE_VERSION=$(jq -r '[.name, .version] | join("@")' package.json)
+            if test -z "$(npm info $PACKAGE_VERSION 2> /dev/null)"
+            then
+                echo "Publishing $PACKAGE_VERSION"
+                # npm publish
+            else
+                echo "Not publishing $PACKAGE_VERSION, already exists."
+            fi
+            
+workflows:              
+  version: 2
+  all:
+    jobs:
+      - test
+      - publish:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master

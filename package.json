@@ -1,28 +1,27 @@
 {
-  "name": "credstash",
-  "version": "1.0.1",
+  "name": "@pizza-hut/credstash",
+  "version": "1.1.0",
   "description": "Module for reading credstash secrets",
   "main": "index.js",
   "scripts": {
-    "security": "nsp check",
     "test": "istanbul cover _mocha -dir $CIRCLE_ARTIFACTS",
     "coverage": "istanbul check-coverage --statement 80 $CIRCLE_ARTIFACTS/coverage.json",
     "coveralls": "cat $CIRCLE_ARTIFACTS/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/roylines/node-credstash.git"
+    "url": "git+https://github.com/pizzahutuk/node-credstash.git"
   },
   "keywords": [
     "credstash",
     "secrets"
   ],
   "author": "Roy Lines",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/roylines/node-credstash/issues"
+    "url": "https://github.com/pizzahutuk/node-credstash/issues"
   },
-  "homepage": "https://github.com/roylines/node-credstash#readme",
+  "homepage": "https://github.com/pizzahutuk/node-credstash#readme",
   "devDependencies": {
     "aws-sdk-mock": "4.2.0",
     "chai": "4.2.0",
