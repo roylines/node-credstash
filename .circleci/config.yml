@@ -13,9 +13,9 @@ jobs:
       - run: npm test
       - run: npm run coverage
       - persist_to_workspace:
-        root: ~/project
-        paths:
-          - .
+          root: ~/project
+          paths:
+            - .
   publish:
     <<: *defaults
     steps:
@@ -32,7 +32,7 @@ jobs:
             if test -z "$(npm info $PACKAGE_VERSION 2> /dev/null)"
             then
                 echo "Publishing $PACKAGE_VERSION"
-                # npm publish
+                npm publish
             else
                 echo "Not publishing $PACKAGE_VERSION, already exists."
             fi

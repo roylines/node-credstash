@@ -4,9 +4,8 @@
   "description": "Module for reading credstash secrets",
   "main": "index.js",
   "scripts": {
-    "test": "istanbul cover _mocha -dir $CIRCLE_ARTIFACTS",
-    "coverage": "istanbul check-coverage --statement 80 $CIRCLE_ARTIFACTS/coverage.json",
-    "coveralls": "cat $CIRCLE_ARTIFACTS/lcov.info | coveralls"
+    "test": "istanbul cover _mocha",
+    "coverage": "istanbul check-coverage --statement 80"
   },
   "repository": {
     "type": "git",
@@ -25,7 +24,6 @@
   "devDependencies": {
     "aws-sdk-mock": "4.2.0",
     "chai": "4.2.0",
-    "coveralls": "3.0.2",
     "istanbul": "0.4.5",
     "mocha": "5.2.0"
   },
