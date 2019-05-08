@@ -22,15 +22,15 @@
   },
   "homepage": "https://github.com/pizzahutuk/node-credstash#readme",
   "devDependencies": {
-    "aws-sdk-mock": "4.2.0",
+    "aws-sdk-mock": "4.4.0",
     "chai": "4.2.0",
     "istanbul": "0.4.5",
-    "mocha": "5.2.0"
+    "mocha": "6.1.4"
   },
   "dependencies": {
-    "aes-js": "3.1.1",
-    "async": "2.6.1",
-    "aws-sdk": "2.345.0",
+    "aes-js": "3.1.2",
+    "async": "2.6.2",
+    "aws-sdk": "2.451.0",
     "xtend": "4.0.1"
   }
 }
