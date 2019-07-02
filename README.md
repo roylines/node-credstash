@@ -26,6 +26,30 @@ The credentials should be set up as a [secret reader](https://github.com/fugue/c
 $ npm install credstash
 ```
 
+```brew
+$ brew install credstash
+```
+
+### Actions
+
+#### Authenticate with AWS
+
+#### List of items
+```
+$ credstash -r {region-name} list
+```
+
+#### Store new item
+```
+$ credstash -r {region-name} put {new-item-name} {new-item-contents}
+```
+
+###### List of regions
+- eu-west-1
+
+###### Useful Credstash Arguments:
+-r - REGION
+
 ## What is credstash?
 [Credstash](https://github.com/fugue/credstash) is a little utility for managing credentials in the cloud
 
