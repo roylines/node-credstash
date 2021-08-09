@@ -23,9 +23,8 @@ jobs:
           at: ~/project
       - run: sudo apt-get update
       - run: sudo apt-get install -y python-pip
-      - run: sudo pip install pytest
-      - run: sudo pip install awscli credstash
-      - run: echo "//registry.npmjs.org/:_authToken=$(credstash -r eu-west-1 get npm-auth-token-circleci)" > ~/.npmrc
+      - run: sudo pip install awscli
+      - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
       - run:
           command: |
             set -e
