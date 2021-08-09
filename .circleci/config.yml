@@ -23,7 +23,6 @@ jobs:
           at: ~/project
       - run: sudo apt-get update
       - run: sudo apt-get install -y python-pip
-      - run: sudo pip install awscli
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
       - run:
           command: |
