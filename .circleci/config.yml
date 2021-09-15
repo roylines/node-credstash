@@ -1,17 +1,26 @@
 defaults: &defaults
   shell: /bin/bash --login
   docker:
-    - image: circleci/node:8.12.0-stretch
+    - image: circleci/node:14
 
 version: 2
 jobs:
   test:
     <<: *defaults
     steps:
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
       - checkout
-      - run: npm ci
-      - run: npm test
-      - run: npm run coverage
+      - run: yarn install
+      - run: yarn test
+      - run: yarn coverage
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
       - persist_to_workspace:
           root: ~/project
           paths:

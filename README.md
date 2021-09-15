@@ -23,7 +23,7 @@ Ensure you have [AWS credentials configured](http://docs.aws.amazon.com/AWSJavaS
 The credentials should be set up as a [secret reader](https://github.com/fugue/credstash#secret-reader)
 
 ```bash
-$ npm install credstash
+$ yarn add credstash
 ```
 
 ## What is credstash?
@@ -40,11 +40,12 @@ Credstash support [versioning of secrets](https://github.com/fugue/credstash#ver
 By default node-credstash will return the latest (most recent version of a secret).
 You can also retrieve the latest N versions of a secret as follows:
 
-```js
-const Credstash = require('credstash');
+```ts
+import Credstash from 'credstash';
+
 const credstash = new Credstash();
 
-credstash.get('secret', {limit: 3}, (e, secrets) => {
+credstash.get('secret', { limit: 3 }, (err, secrets) => {
   console.log('this is the last version', secrets[0]);
   console.log('this is the second-last', secrets[1]);
   console.log('this is the third-last', secrets[2]);
